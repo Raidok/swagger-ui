@@ -36,6 +36,11 @@ if [[ -f $SWAGGER_JSON ]]; then
   sed -i "s|http://example.com/api|$REL_PATH|g" $INDEX_FILE
 fi
 
+if [[ ! -z $SWAGGER_JSON_URL ]]; then
+  sed -i "s|https://petstore.swagger.io/v2/swagger.json|$SWAGGER_JSON_URL|g" $INDEX_FILE
+  sed -i "s|http://example.com/api|$SWAGGER_JSON_URL|g" $INDEX_FILE
+fi
+
 # replace the PORT that nginx listens on if PORT is supplied
 if [[ -n "${PORT}" ]]; then
     sed -i "s|8080|${PORT}|g" /etc/nginx/nginx.conf
