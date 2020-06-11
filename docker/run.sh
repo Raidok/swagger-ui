@@ -27,6 +27,12 @@ if [ "${BASE_URL}" ]; then
   sed -i "s|location / {|location $BASE_URL {|g" /etc/nginx/nginx.conf
 fi
 
+if [[ ! -z $HTTP_AUTH ]]; then
+  sed -i "s|location / {|location $BASE_URL {|g" /etc/nginx/nginx.conf
+  sed -i "s/#auth_basic/auth_basic/g;" /etc/nginx/nginx.conf
+  echo -n $HTTP_AUTH > /etc/nginx/.htpasswd
+fi
+
 replace_in_index myApiKeyXXXX123456789 $API_KEY
 
 if [[ -f $SWAGGER_JSON ]]; then
