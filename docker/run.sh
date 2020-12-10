@@ -33,6 +33,11 @@ if [[ ! -z $HTTP_AUTH ]]; then
   echo -n $HTTP_AUTH > /etc/nginx/.htpasswd
 fi
 
+if [[ ! -z $PROXY_PASS_OPENAPI ]]; then
+  sed -i "s|#PROXY_PASS_OPENAPI#|$PROXY_PASS_OPENAPI|g" /etc/nginx/nginx.conf
+  sed -i "s/#proxy_pass_openapi //g;" /etc/nginx/nginx.conf
+fi
+
 replace_in_index myApiKeyXXXX123456789 $API_KEY
 
 if [[ -f $SWAGGER_JSON ]]; then
